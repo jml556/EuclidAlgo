@@ -12,7 +12,7 @@ book1: {
 }
 My current question is how to get the future propositons which the current propsitions rely on for propsReliedOn
 */
-z
+
 function orderEuclid(text) {
   const lowerCasedText = euclidText.replace(/(\r\n|\n|\r)/gm, "").split('BOOK ').slice(1) //regex removes newline characters that are present since text was copied and pasted from a website
   const bookObj = {} // object to keep hold of the props in each book.
@@ -23,7 +23,7 @@ function orderEuclid(text) {
   Object.keys(bookObj).forEach(item => {
     const propObj = {}
     bookObj[item].split('Proposition').slice(1) //splitting each text in a book by the word Proposition to get each proposition's text
-      .forEach((item, idx) => propObj[`prop${idx + 1}`] = {text: item, propsRelyingOn: item.match(/\[.*?\]/g), propsReliedOn: []}) //iterating over 
+      .forEach((item, idx) => propObj[`prop${idx + 1}`] = {text: item, propsRelyingOn: item.match(/\[.*?\]/g), propsReliedOn: []}) 
 
     bookObj[item] = propObj
   })
