@@ -30,7 +30,7 @@ function orderEuclid(text) {
   return bookObj
 }
 
-orderEuclid(euclidText)
+console.log(JSON.stringify(orderEuclid(euclidText)))
 
 /*
 desired result: 
