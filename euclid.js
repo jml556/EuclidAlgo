@@ -18,19 +18,32 @@ function orderEuclid(text) {
   const bookObj = {} // object to keep hold of the props in each book.
 
   lowerCasedText.forEach((item, idx) => bookObj[`book${idx + 1}`] = item) //iterates over lowerCasedText and creates a book as a key and the associated props for that book as the values.
-
+  console.log(JSON.stringify(bookObj))
   //Iterates over the bookObj and sets each book's value to an object which contains each proposition as another object.
   Object.keys(bookObj).forEach(item => {
     const propObj = {}
-    bookObj[item].split('Proposition').slice(1) //splitting each text in a book by the word Proposition to get each proposition's text
-      .forEach((item, idx) => propObj[`prop${idx + 1}`] = {text: item, propsRelyingOn: item.match(/\[.*?\]/g), propsReliedOn: []}) 
+    bookObj[item].split(/Proposition|PROPOSITION/g).slice(1) //splitting each text in a book by the word Proposition to get each proposition's text
+      .forEach((item, idx) => {
+        if(idx !== 0) {
+          propObj[`prop${idx}`] = {text: item, propsRelyingOn: item.match(/\[.*?\]/g), propsReliedOn: []}
+        }
+      }) 
 
     bookObj[item] = propObj
   })
   return bookObj
 }
+const obj = orderEuclid(euclidText)
 
-console.log(JSON.stringify(orderEuclid(euclidText)))
+console.log(Object.entries(obj))
+
+const fs = require('fs');
+fs.writeFile("/Users/josephlee/projects/test.txt", JSON.stringify(obj), function(err) {
+    if(err) {
+        return console.log(err);
+    }
+    console.log("The file was saved!");
+}); 
 
 /*
 desired result: 
